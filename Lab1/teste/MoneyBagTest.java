@@ -17,7 +17,7 @@ public class MoneyBagTest {
 		moneyTwo.setAmount(20);
 		moneyTwo.setCurrency("CHF");
 		moneyThree.setAmount(15);
-		moneyThree.setCurrency("USD");		
+		moneyThree.setCurrency("EUR");		
 		moneyBag = new MoneyBag(moneyOne, moneyTwo, moneyThree);
 	}
 	
@@ -66,6 +66,11 @@ public class MoneyBagTest {
 		moneyBag.addSpecificAmount(money);
 		assertEquals (100, moneyBag.getSpecificAmount(money));
 		assertEquals(moneyBag.getMoneyBagSize(),previousMoneyBagSize + 1);
+	}
+	
+	@Test
+	public void WhenConvertToBRLThenShowsAmountInBRL() {
+		assertEquals (130, moneyBag.convertToBRL());
 	}
 
 }

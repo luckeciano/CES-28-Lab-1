@@ -55,6 +55,21 @@ public class MoneyBag implements MoneyFactory {
 		}
 		return false;
 	}
+	//convert all money in money bag into BRL
+	public int convertToBRL() {
+		int result = 0;
+		for (Money moneyInTheBag: _moneyList) {
+			if (moneyInTheBag.getCurrency() == "USD")
+				result += 3*moneyInTheBag.getAmount();
+			else if (moneyInTheBag.getCurrency() == "CHF")
+				result += 2*moneyInTheBag.getAmount();
+			else if (moneyInTheBag.getCurrency() == "BRL")
+				result += moneyInTheBag.getAmount();
+			else if (moneyInTheBag.getCurrency() == "EUR")
+				result += 4*moneyInTheBag.getAmount();
+		}
+		return result;
+	}
 	
 	//Application of Money Bag
 	public static void main (String[] args) {
