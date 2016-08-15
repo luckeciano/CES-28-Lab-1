@@ -1,11 +1,14 @@
 class Money implements MoneyFactory {
 	private int _amount;
-	private String _currency;
-	
-	public Money() {
+	private Currency _currency;
+	public Money () {
+		
+	}
+	public Money(Currency currency) {
+		setCurrency(currency);
 	}
 	public MoneyFactory add(Money m) {
-		if (this.getCurrency() == m.getCurrency()) {
+		if (this.getCurrency().getCurrencyName() == m.getCurrency().getCurrencyName()) {
 			Money money = (Money) MoneyFactory.choose(1);
 			money.setAmount(this.getAmount() + m.getAmount());
 			money.setCurrency(this.getCurrency());
@@ -24,10 +27,10 @@ class Money implements MoneyFactory {
 	public void setAmount(int amount){
 		this. _amount = amount;
 	}
-	public String getCurrency(){ 
+	public Currency getCurrency(){ 
 		return _currency;
 	}
-	public void setCurrency(String currency){ 
+	public void setCurrency(Currency currency){ 
 		this. _currency = currency;
 	}
 

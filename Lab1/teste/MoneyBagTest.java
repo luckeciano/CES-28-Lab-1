@@ -9,15 +9,12 @@ public class MoneyBagTest {
 
 	@Before
 	public void setUp() {
-		moneyOne = new Money();
-		moneyTwo = new Money();
-		moneyThree = new Money();
+		moneyOne = new Money(new Currency("USD"));
+		moneyTwo = new Money(new Currency("CHF"));
+		moneyThree = new Money(new Currency("EUR"));
 		moneyOne.setAmount(10);
-		moneyOne.setCurrency("USD");
 		moneyTwo.setAmount(20);
-		moneyTwo.setCurrency("CHF");
-		moneyThree.setAmount(15);
-		moneyThree.setCurrency("EUR");		
+		moneyThree.setAmount(15);		
 		moneyBag = new MoneyBag(moneyOne, moneyTwo, moneyThree);
 	}
 	
@@ -44,7 +41,7 @@ public class MoneyBagTest {
 	public void WhenDontHaveThisCurrencyInBag() {
 		Money money = new Money();
 		money.setAmount(100);
-		money.setCurrency("BRL");
+		money.setCurrency(new Currency("BRL"));
 		assertFalse(moneyBag.hasCurrency(money));
 	}
 	
@@ -52,7 +49,7 @@ public class MoneyBagTest {
 	public void WhenAddCurrencyAlreadInBagThenSetsItsAmount() {
 		Money money = new Money();
 		money.setAmount(100);
-		money.setCurrency("USD");
+		money.setCurrency(new Currency("USD"));
 		moneyBag.addSpecificAmount(money);
 		assertEquals(110,moneyBag.getSpecificAmount(money));
 	}
@@ -62,7 +59,7 @@ public class MoneyBagTest {
 		int previousMoneyBagSize = moneyBag.getMoneyBagSize();
 		Money money = new Money();
 		money.setAmount(100);
-		money.setCurrency("BRL");		
+		money.setCurrency(new Currency("BRL"));		
 		moneyBag.addSpecificAmount(money);
 		assertEquals (100, moneyBag.getSpecificAmount(money));
 		assertEquals(moneyBag.getMoneyBagSize(),previousMoneyBagSize + 1);

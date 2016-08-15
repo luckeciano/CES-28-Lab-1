@@ -20,7 +20,7 @@ public class MoneyBag implements MoneyFactory {
 	}
 	public int getSpecificAmount (Money money) {
 		for (Money moneyInBag:_moneyList) {
-			if (moneyInBag.getCurrency() == money.getCurrency())
+			if (moneyInBag.getCurrency().getCurrencyName() == money.getCurrency().getCurrencyName())
 				return moneyInBag.getAmount(); 
 		}
 		return 0;
@@ -37,7 +37,7 @@ public class MoneyBag implements MoneyFactory {
 	public void addSpecificAmount(Money money) {
 		boolean hasInBag = false;
 		for (Money moneyInBag:_moneyList) {
-			if (moneyInBag.getCurrency() == money.getCurrency()) {		
+			if (moneyInBag.getCurrency().getCurrencyName() == money.getCurrency().getCurrencyName()) {		
 				hasInBag = true;
 				moneyInBag.setAmount(moneyInBag.getAmount() + money.getAmount());
 			}			
@@ -49,7 +49,7 @@ public class MoneyBag implements MoneyFactory {
 	//verify if exists a specific currency in the money bag
 	public boolean hasCurrency (Money money) {
 		for (Money moneyInBag: _moneyList) {
-			if (moneyInBag.getCurrency() == money.getCurrency()) {
+			if (moneyInBag.getCurrency().getCurrencyName() == money.getCurrency().getCurrencyName()) {
 				return true;
 			}
 		}
@@ -59,13 +59,13 @@ public class MoneyBag implements MoneyFactory {
 	public int convertToBRL() {
 		int result = 0;
 		for (Money moneyInTheBag: _moneyList) {
-			if (moneyInTheBag.getCurrency() == "USD")
+			if (moneyInTheBag.getCurrency().getCurrencyName() == "USD")
 				result += 3*moneyInTheBag.getAmount();
-			else if (moneyInTheBag.getCurrency() == "CHF")
+			else if (moneyInTheBag.getCurrency().getCurrencyName() == "CHF")
 				result += 2*moneyInTheBag.getAmount();
-			else if (moneyInTheBag.getCurrency() == "BRL")
+			else if (moneyInTheBag.getCurrency().getCurrencyName() == "BRL")
 				result += moneyInTheBag.getAmount();
-			else if (moneyInTheBag.getCurrency() == "EUR")
+			else if (moneyInTheBag.getCurrency().getCurrencyName() == "EUR")
 				result += 4*moneyInTheBag.getAmount();
 		}
 		return result;
@@ -75,29 +75,25 @@ public class MoneyBag implements MoneyFactory {
 	public static void main (String[] args) {
 		System.out.println("Application of a MoneyBag with multiple currencies:");
 		System.out.println("1) Constructing a MoneyBag with 10 USD + 20 CHF");
-		Money moneyUSD = new Money();
+		Money moneyUSD = new Money(new Currency("USD"));
 		moneyUSD.setAmount(10);
-		moneyUSD.setCurrency("USD");
-		Money moneyCHF = new Money();
+		Money moneyCHF = new Money(new Currency("CHF"));
 		moneyCHF.setAmount(20);
-		moneyCHF.setCurrency("CHF");
 		MoneyBag moneyBag = new MoneyBag(moneyUSD, moneyCHF);
 		for (Money moneyInBag:moneyBag.getTotalAmount()) {
-			System.out.println(moneyInBag.getAmount() + " " + moneyInBag.getCurrency());
+			System.out.println(moneyInBag.getAmount() + " " + moneyInBag.getCurrency().getCurrencyName());
 		}
 		System.out.println("2) Adding a new amount in USD");
-		Money newMoneyUSD = new Money();
+		Money newMoneyUSD = new Money(new Currency("USD"));
 		newMoneyUSD.setAmount(20);
-		newMoneyUSD.setCurrency("USD");
 		moneyBag.addSpecificAmount(newMoneyUSD);
 		System.out.println( moneyBag.getSpecificAmount(newMoneyUSD) + " USD");
 		System.out.println("3) Finally, adding a new currency in Money Bag");
-		Money newMoneyBRL = new Money();
+		Money newMoneyBRL = new Money(new Currency("BRL"));
 		newMoneyBRL.setAmount(15);
-		newMoneyBRL.setCurrency("BRL");
 		moneyBag.addSpecificAmount(newMoneyBRL);
 		for (Money moneyInBag:moneyBag.getTotalAmount()) {
-			System.out.println(moneyInBag.getAmount() + " " + moneyInBag.getCurrency());
+			System.out.println(moneyInBag.getAmount() + " " + moneyInBag.getCurrency().getCurrencyName());
 		}
 		
 	}

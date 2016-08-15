@@ -1,47 +1,41 @@
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class MoneyTest {
+	private Money money1, money2;
+	
+	@Before
+	public void setUp(){
+		money1 = new Money(new Currency("BRL"));
+		money2 = new Money(new Currency("BRL"));
+		money1.setAmount(10);
+		money2.setAmount(5);
+	}	
+	
+	
 	@Test
-	public void WhenAddsThenSumAmount_AssertTrue(){
-		Money money = new Money();
-		money.setAmount(10);
-		money.setCurrency("BRL");
-		assertTrue(20 == ((Money) money.add(money)).getAmount());
+	public void WhenAddsThenSumAmountAssertTrue(){
+		assertTrue(((Money) money1.add(money2)).getAmount() == 15);
 	}
 	
 	@Test
-	public void WhenAddsThenSumAmount_assertEquals(){
-		Money money1 = new Money();
-		Money money2 = new Money();
-		money1.setAmount(10);
-		money1.setCurrency("BRL");
-		money2.setAmount(0);
-		money2.setCurrency("BRL");
+	public void WhenAddsThenSumAmountAssertEquals(){
 		Money moneyFinal = (Money) money2.add(money1);
-		assertEquals(money1.getAmount(), moneyFinal.getAmount());
+		assertEquals(15, moneyFinal.getAmount());
 	}
 	
 	@Test
 	public void WhenAddsSameCurrencyThenReturnsMoney() {
-		Money money1 = new Money();
-		Money money2 = new Money();
-		money1.setAmount(10);
-		money1.setCurrency("BRL");
-		money2.setAmount(0);
-		money2.setCurrency("BRL");
 		assertEquals (money2.add(money1).getClass().getName(), "Money");
 	}
 	
 	@Test
 	public void WhenAddsDifferentCurrenciesThenReturnsMoneyBag() {
-		Money money1 = new Money();
-		Money money2 = new Money();
-		money1.setAmount(10);
-		money1.setCurrency("BRL");
-		money2.setAmount(0);
-		money2.setCurrency("USD");
+		Money money = new Money();
+		money.setAmount(20);
+		money2.setCurrency(new Currency("USD"));
 		assertEquals (money2.add(money1).getClass().getName(), "MoneyBag");
 	}
 	
